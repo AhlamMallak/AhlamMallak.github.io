@@ -98,6 +98,12 @@ jobs:
           else
             echo "SITE_URL=https://${OWNER}.github.io/${REPO}" >> $GITHUB_ENV
           fi
+      - name: Verify source used by build
+        run: |
+          echo "Commit being built:"
+          git rev-parse HEAD
+          echo "Beginning of terms.astro:"
+          sed -n '1,25p' src/pages/terms.astro
       - name: Build
         run: pnpm run build
         env:
