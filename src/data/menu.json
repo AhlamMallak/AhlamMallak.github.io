@@ -1,0 +1,40 @@
+{
+  "sections": [
+    {
+      "label": "Home",
+      "shortLabel": "Home",
+      "href": "/#home",
+      "desc": "Ahlam Mallak — research, engineering and ideas"
+    },
+    {
+      "label": "About / CV",
+      "shortLabel": "About / CV",
+      "href": "/#about",
+      "desc": "Background, career timeline, education and skills"
+    },
+    {
+      "label": "Publications",
+      "shortLabel": "Publications",
+      "href": "/publications.html",
+      "desc": "Journal papers, conference contributions and patents"
+    },
+    {
+      "label": "Projects",
+      "shortLabel": "Projects",
+      "href": "/projects.html",
+      "desc": "Research, software and prototypes"
+    },
+    {
+      "label": "Educational Content",
+      "shortLabel": "Learn",
+      "href": "/education.html",
+      "desc": "Videos, tutorials and articles"
+    },
+    {
+      "label": "Contact",
+      "shortLabel": "Contact",
+      "href": "/contact.html",
+      "desc": "Research and collaboration"
+    }
+  ]
+}
