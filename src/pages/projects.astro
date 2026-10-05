@@ -1,0 +1,29 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import personalData from '../data/personal.json';
+import Projects from '../components/Projects.astro';
+---
+<Layout title={`Projects | ${personalData.name}`} description="Projects — Ahlam Mallak">
+  <Header />
+  <main id="main-content"><Projects /></main>
+  <Footer />
+</Layout>
+<style>
+  .portfolio-page { padding: 8rem 0 5rem; min-height: 70vh; }
+  .page-heading { margin: 0 0 2rem; font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 700; color: var(--text); }
+  .page-intro { font-size: 1.0625rem; line-height: 1.8; color: var(--text-muted); }
+  .publication-group { margin-top: 3rem; }
+  .publication-group h2 { font-size: 1.5rem; font-weight: 600; margin-bottom: 1.5rem; color: var(--text); }
+  .publication-list { padding: 0; list-style: none; }
+  .publication-entry { padding: 1.25rem 0; border-bottom: 1px solid var(--border, #334155); }
+  .publication-entry h3 { font-size: 1.125rem; font-weight: 600; line-height: 1.5; color: var(--text); margin-bottom: 0.5rem; }
+  .publication-entry p { font-size: 1rem; line-height: 1.7; color: var(--text-muted); }
+  .publication-entry a, .profile-links a { display: inline-block; color: var(--accent); padding: 0.5rem 0; font-size: 1rem; }
+  .profile-links { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1rem; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+  .learning-section { margin-top: 3rem; border-top: 1px solid var(--border, #334155); padding-top: 2rem; }
+  .learning-section h2 { font-size: 1.5rem; font-weight: 600; color: var(--text); margin-bottom: 1rem; }
+</style>
+<style>main { padding-top: 4rem; }</style>
