@@ -1,0 +1,186 @@
+---
+import personalData from '../data/personal.json';
+import conferencesData from '../data/conferences.json';
+import { getSocialLinks } from '../lib/socialLinks';
+import { withBase } from '../lib/assetPath';
+import { existsSync, readdirSync } from 'node:fs';
+import { extname, join } from 'node:path';
+
+const heroSocialLinks = getSocialLinks(
+  personalData as unknown as Record<string, string | string[]>,
+  personalData.heroSocialLinks
+);
+const slides = conferencesData.slides;
+const cvValue = (personalData.cv ?? '').trim();
+const isExternalCv = /^https?:\/\//i.test(cvValue);
+const hasLocalCv = cvValue.startsWith('/') &&
+  existsSync(join(process.cwd(), 'public', cvValue.replace(/^\//, '')));
+let discoveredCv = '';
+const cvDir = join(process.cwd(), 'public', 'cv');
+if (!isExternalCv && !hasLocalCv && existsSync(cvDir)) {
+  const candidates = readdirSync(cvDir)
+    .filter((file) => ['.pdf', '.doc', '.docx'].includes(extname(file).toLowerCase()))
+    .sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }));
+  if (candidates.length) discoveredCv = `/cv/${candidates[0]}`;
+}
+const cvHref = isExternalCv ? cvValue : hasLocalCv ? withBase(cvValue) : discoveredCv ? withBase(discoveredCv) : '';
+---
+
+<section id="home" class="personal-hero" aria-labelledby="hero-name">
+  <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="hero-layout">
+      <div class="hero-introduction">
+        <p class="hero-eyebrow">Welcome to my portfolio</p>
+        <div class="hero-identity">
+          <img
+            src={withBase(personalData.photo)}
+            alt={personalData.photoAlt || 'Portrait of Ahlam Mallak'}
+            class="hero-portrait"
+            width="320"
+            height="320"
+            loading="eager"
+            draggable="false"
+          />
+          <h1 id="hero-name">Hi, I’m<br /><span class="gradient-text">{personalData.name}</span></h1>
+        </div>
+        <p class="hero-role">{personalData.heroRole}</p>
+        <p class="hero-bio">{personalData.bio}</p>
+        <div class="hero-actions">
+          <a href="#contact" class="btn-primary">Get In Touch</a>
+          {cvHref ? (
+            <a href={cvHref} target="_blank" rel="noopener noreferrer" class="btn-secondary">Download CV</a>
+          ) : (
+            <button type="button" data-print-resume class="btn-secondary">Print Resume</button>
+          )}
+        </div>
+        <div class="hero-social-links">
+          {heroSocialLinks.map((link) => (
+            <a href={link.url} target="_blank" rel="noopener noreferrer" aria-label={link.label}>
+              <iconify-icon icon={link.icon} width="24" height="24" aria-hidden="true" />
+            </a>
+          ))}
+        </div>
+      </div>
+
+      {slides.length > 0 && (
+        <section class="conference-panel" data-conference-carousel aria-label="Conference and research highlights" aria-roledescription="carousel">
+          <header class="conference-heading">
+            <h2>Conferences &amp; Highlights</h2>
+          </header>
+          <div class="conference-slides" aria-live="off">
+            {slides.map((slide, index) => (
+              <figure class:list={['conference-slide', { 'is-active': index === 0 }]} data-conference-slide aria-hidden={index !== 0} role="group" aria-roledescription="slide" aria-label={`${index + 1} of ${slides.length}`}>
+                <div class="conference-image-area">
+                  <img src={withBase(slide.image)} alt={slide.alt} width="1000" height="750" loading={index === 0 ? 'eager' : 'lazy'} draggable="false" />
+                </div>
+                <figcaption>{slide.caption}</figcaption>
+              </figure>
+            ))}
+          </div>
+          {slides.length > 1 && (
+            <div class="conference-controls">
+              <button type="button" data-conference-prev aria-label="Previous photo">Previous</button>
+              <span data-conference-counter aria-live="off">1 / {slides.length}</span>
+              <button type="button" data-conference-next aria-label="Next photo">Next</button>
+              <button type="button" data-conference-pause aria-label="Pause automatic slideshow">Pause</button>
+            </div>
+          )}
+        </section>
+      )}
+    </div>
+  </div>
+</section>
+
+<style>
+  .personal-hero {
+    position: relative;
+    padding: 9rem 0 5rem;
+    scroll-margin-top: 80px;
+    background: radial-gradient(ellipse at 85% 25%, rgb(99 102 241 / 10%), transparent 55%);
+  }
+  .hero-layout { display: grid; gap: 3rem; align-items: center; }
+  .hero-introduction, .conference-panel { min-width: 0; }
+  .hero-eyebrow { color: var(--accent, #38bdf8); font-size: 0.875rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1.5rem; }
+  .hero-identity { display: flex; align-items: center; gap: 1.5rem; }
+  .hero-portrait { width: clamp(6rem, 12vw, 9rem); height: auto; aspect-ratio: 1; object-fit: cover; object-position: center 35%; border-radius: 50%; border: 2px solid rgb(148 163 184 / 35%); flex-shrink: 0; }
+  h1 { margin: 0; font-size: clamp(2rem, 3.6vw, 3.5rem); line-height: 1.15; color: var(--text, #f8fafc); overflow-wrap: anywhere; }
+  .hero-role { margin-top: 1.5rem; font-size: 1.25rem; line-height: 1.6; color: var(--text-muted, #cbd5e1); }
+  .hero-bio { margin-top: 1.25rem; font-size: 1.0625rem; line-height: 1.8; color: var(--text-muted, #cbd5e1); max-width: 38rem; }
+  .hero-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 1.75rem; }
+  .hero-actions > * { text-align: center; }
+  .hero-social-links { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 1.75rem; }
+  .hero-social-links a { color: var(--text-muted, #94a3b8); display: inline-flex; }
+  .hero-social-links a:hover { color: var(--accent, #38bdf8); }
+  .conference-panel { position: relative; width: 100%; border: 1px solid rgb(148 163 184 / 30%); border-radius: 1.25rem; background: var(--bg-card, #0f172a); overflow: hidden; box-shadow: 0 18px 45px rgb(0 0 0 / 15%); }
+  .conference-heading { padding: 1.25rem 1.5rem; border-bottom: 1px solid rgb(148 163 184 / 20%); }
+  .conference-heading h2 { margin: 0; font-size: 1.125rem; font-weight: 600; color: var(--text, #f8fafc); }
+  .conference-slides { display: grid; }
+  .conference-slide { grid-area: 1 / 1; min-width: 0; margin: 0; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity 500ms ease; }
+  .conference-slide.is-active { opacity: 1; visibility: visible; pointer-events: auto; }
+  .conference-image-area { width: 100%; aspect-ratio: 4 / 3; background: rgb(2 6 23 / 8%); }
+  .conference-image-area img { width: 100%; height: 100%; object-fit: contain; display: block; }
+  figcaption { padding: 1.25rem 1.5rem; color: var(--text-muted, #cbd5e1); font-size: 1rem; line-height: 1.65; overflow-wrap: anywhere; }
+  .conference-controls { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 0.75rem; padding: 1rem; border-top: 1px solid rgb(148 163 184 / 20%); }
+  .conference-controls button { min-height: 44px; padding: 0.5rem 0.75rem; border-radius: 0.5rem; border: 1px solid rgb(148 163 184 / 35%); color: var(--text, #f8fafc); font-size: 0.875rem; cursor: pointer; }
+  .conference-controls button:hover { background: rgb(99 102 241 / 12%); }
+  .conference-controls span { font-size: 0.875rem; color: var(--text-muted, #cbd5e1); min-width: 3.5rem; text-align: center; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent, #38bdf8); outline-offset: 4px; }
+  @media (min-width: 1024px) { .hero-layout { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 3rem; } }
+  @media (max-width: 480px) { .hero-identity { flex-direction: column; align-items: flex-start; } .personal-hero { padding-top: 7rem; } }
+  @media (prefers-reduced-motion: reduce) { .conference-slide { transition: none; } }
+</style>
+
+<script>
+  document.querySelector('[data-print-resume]')?.addEventListener('click', () => window.print());
+  const panel = document.querySelector<HTMLElement>('[data-conference-carousel]');
+  if (panel) {
+    const slides = Array.from(panel.querySelectorAll<HTMLElement>('[data-conference-slide]'));
+    const counter = panel.querySelector<HTMLElement>('[data-conference-counter]');
+    const pause = panel.querySelector<HTMLButtonElement>('[data-conference-pause]');
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    let current = 0;
+    let paused = motion.matches;
+    let hovered = false;
+    let focused = false;
+    let visible = true;
+    let timer: ReturnType<typeof setInterval> | undefined;
+
+    function show(index: number) {
+      current = (index + slides.length) % slides.length;
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('is-active', i === current);
+        slide.setAttribute('aria-hidden', String(i !== current));
+      });
+      if (counter) counter.textContent = `${current + 1} / ${slides.length}`;
+    }
+    function schedule() {
+      if (timer !== undefined) clearInterval(timer);
+      timer = undefined;
+      if (slides.length > 1 && !paused && !hovered && !focused && visible && !document.hidden) {
+        timer = setInterval(() => show(current + 1), 6500);
+      }
+    }
+    function updatePauseButton() {
+      if (!pause) return;
+      pause.textContent = paused ? 'Play' : 'Pause';
+      pause.setAttribute('aria-label', paused ? 'Play automatic slideshow' : 'Pause automatic slideshow');
+    }
+    panel.querySelector('[data-conference-prev]')?.addEventListener('click', () => { show(current - 1); schedule(); });
+    panel.querySelector('[data-conference-next]')?.addEventListener('click', () => { show(current + 1); schedule(); });
+    pause?.addEventListener('click', () => { paused = !paused; updatePauseButton(); schedule(); });
+    panel.addEventListener('mouseenter', () => { hovered = true; schedule(); });
+    panel.addEventListener('mouseleave', () => { hovered = false; schedule(); });
+    panel.addEventListener('focusin', () => { focused = true; schedule(); });
+    panel.addEventListener('focusout', (event) => {
+      focused = event.relatedTarget instanceof Node && panel.contains(event.relatedTarget);
+      schedule();
+    });
+    document.addEventListener('visibilitychange', schedule);
+    motion.addEventListener('change', () => { paused = motion.matches; updatePauseButton(); schedule(); });
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver(([entry]) => { visible = entry.isIntersecting; schedule(); }, { threshold: 0.1 }).observe(panel);
+    }
+    updatePauseButton();
+    schedule();
+  }
+</script>
