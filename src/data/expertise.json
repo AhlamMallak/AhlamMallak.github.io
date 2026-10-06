@@ -1,28 +1,40 @@
 {
   "items": [
     {
-      "key": "sysadmin",
-      "icon": "server-stack",
-      "title": "Design & Art Direction",
-      "description": "Visual identity, layout, typography, and the aesthetic decisions that make people stop and look twice. Whether print or screen, the goal is the same — work that holds up."
-    },
-    {
-      "key": "webdev",
+      "key": "research",
       "icon": "code-bracket-square",
-      "title": "Web Design & Development",
-      "description": "From wireframe to deployment — building sites and apps that look considered, perform well, and give visitors exactly what they came for."
+      "title": "Research & Development",
+      "description": "I turn research questions into experiments, algorithms, and working prototypes, drawing on experience across academic and industry-oriented projects."
     },
     {
-      "key": "freelance",
-      "icon": "user-circle",
-      "title": "Creative Freelance",
-      "description": "Independent project work in photography, video, 3D, illustration, or wherever the brief leads. Direct to work with, flexible, and invested in the outcome."
+      "key": "machine-learning",
+      "icon": "server-stack",
+      "title": "Machine Learning & AI",
+      "description": "I develop and evaluate machine learning models for prediction, classification, and anomaly detection, with applications in time-series data and biomedical analysis."
     },
     {
-      "key": "leadership",
+      "key": "data-science",
+      "icon": "code-bracket-square",
+      "title": "Data Science & Statistical Analysis",
+      "description": "I bring together complex datasets, investigate patterns, and build reproducible analytical workflows that help answer practical and scientific questions."
+    },
+    {
+      "key": "industry",
+      "icon": "server-stack",
+      "title": "IoT & Industry 4.0",
+      "description": "I work with sensor data and distributed systems to understand equipment behaviour, detect faults, and support predictive maintenance."
+    },
+    {
+      "key": "biomedical",
       "icon": "users",
-      "title": "Collaboration & Direction",
-      "description": "Working alongside teams, clients, and stakeholders to take a project from idea to shipped — clear communication, honest timelines, and work that actually gets done."
+      "title": "Biomedical Analytics, Bioinformatics & Computational Neuroscience",
+      "description": "I apply machine learning and statistical methods to biomedical questions, from medical imaging for Alzheimer’s disease diagnosis to genetic studies of disease. My interests extend to computational neuroscience and understanding the brain through data and models."
+    },
+    {
+      "key": "robotics",
+      "icon": "code-bracket-square",
+      "title": "Robotics",
+      "description": ""
     }
   ]
 }
