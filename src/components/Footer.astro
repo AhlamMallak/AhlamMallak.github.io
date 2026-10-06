@@ -2,14 +2,34 @@
 import personalData from '../data/personal.json';
 import siteData from '../data/site.json';
 import menuData from '../data/menu.json';
-import { getSocialLinks } from '../lib/socialLinks';
+import profiles from '../data/profiles.json';
 
 const currentYear = new Date().getFullYear();
 const base = import.meta.env.BASE_URL.replace(/\/?$/, '/');
 
-const socialLinks = getSocialLinks(personalData as unknown as Record<string, string | string[]>);
+const socialLinks = [
+  { label: 'GitHub', url: profiles.github, icon: 'simple-icons:github' },
+  { label: 'LinkedIn', url: profiles.linkedin, icon: 'mdi:linkedin' },
+  { label: 'ResearchGate', url: profiles.researchgate, icon: 'simple-icons:researchgate' },
+  { label: 'Google Scholar', url: profiles.googlescholar, icon: 'simple-icons:googlescholar' },
+].filter((link) => link.url);
 
-const navLinks = menuData.sections.map((s) => ({ label: s.label, href: s.href }));
+const footerTags = [
+  'Research & Development',
+  'Machine Learning & AI',
+  'Data Science',
+  'IoT & Industry 4.0',
+  'Computational Biology',
+  'Computational Neuroscience',
+  'Robotics',
+];
+const footerTagline = 'Scientist–engineer working with machine learning, sensor data, and biomedical analytics.';
+const resolveHref = (href: string) =>
+  /^(?:[a-z][a-z0-9+.-]*:|\/\/)/i.test(href)
+    ? href
+    : `${base}${href.replace(/^\//, '')}`;
+
+const navLinks = menuData.sections.map((s) => ({ label: s.label, href: resolveHref(s.href) }));
 
 const { footerAttribution } = siteData;
 ---
@@ -30,7 +50,7 @@ const { footerAttribution } = siteData;
         <div class="mt-4">
           <p class="text-lg font-bold gradient-text">{personalData.name}</p>
           <p class="text-slate-500 text-xs mt-1 leading-relaxed max-w-[220px]">
-            {siteData.tagline}
+            {footerTagline}
           </p>
           <a href={`mailto:${personalData.email}`} class="footer-email mt-3">
             <svg
@@ -65,7 +85,7 @@ const { footerAttribution } = siteData;
 
       <div class="footer-right">
         <div class="flex flex-wrap gap-2">
-          {siteData.seoKeywords.map((kw) => <span class="footer-kw">{kw}</span>)}
+          {footerTags.map((kw) => <span class="footer-kw">{kw}</span>)}
         </div>
       </div>
     </div>
@@ -128,7 +148,7 @@ const { footerAttribution } = siteData;
   }
   @media (min-width: 768px) {
     .footer-grid {
-      grid-template-columns: auto 1fr auto;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 0.8fr) minmax(0, 1.4fr);
       gap: 3rem;
     }
   }
@@ -145,6 +165,7 @@ const { footerAttribution } = siteData;
   }
   .footer-right {
     text-align: right;
+    min-width: 0;
   }
 
   @media (max-width: 767px) {
@@ -391,7 +412,7 @@ const { footerAttribution } = siteData;
     font-size: 0.68rem;
     font-weight: 500;
     letter-spacing: 0.03em;
-    color: #334155;
+    color: var(--text-muted, #94a3b8);
     background: rgba(99, 102, 241, 0.04);
     border: 1px solid rgba(99, 102, 241, 0.1);
     border-radius: 9999px;
@@ -418,7 +439,7 @@ const { footerAttribution } = siteData;
   }
 
   .footer-social {
-    color: #334155;
+    color: var(--text-muted, #94a3b8);
     display: inline-flex;
     align-items: center;
     transition:
