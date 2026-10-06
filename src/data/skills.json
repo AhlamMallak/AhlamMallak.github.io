@@ -5,60 +5,65 @@
   },
   "categories": [
     {
-      "title": "Design & Illustration",
+      "title": "Programming & Scientific Computing",
       "skills": [
-        { "name": "Figma",       "icon": "simple-icons:figma" },
-        { "name": "Photoshop",   "icon": "simple-icons:adobephotoshop" },
-        { "name": "Illustrator", "icon": "simple-icons:adobeillustrator" },
-        { "name": "Blender",     "icon": "simple-icons:blender" },
-        { "name": "Sketch",      "icon": "simple-icons:sketch" }
+        { "name": "Python", "icon": "simple-icons:python" },
+        { "name": "R", "icon": "simple-icons:r" },
+        { "name": "MATLAB", "icon": "mdi:matrix" },
+        { "name": "C++", "icon": "simple-icons:cplusplus" },
+        { "name": "NumPy", "icon": "simple-icons:numpy" },
+        { "name": "Pandas", "icon": "simple-icons:pandas" }
       ]
     },
     {
-      "title": "Web & Frontend",
+      "title": "Machine Learning & Deep Learning",
       "skills": [
-        { "name": "HTML5",      "icon": "simple-icons:html5" },
-        { "name": "CSS3",       "icon": "simple-icons:css3" },
-        { "name": "JavaScript", "icon": "simple-icons:javascript" },
-        { "name": "TypeScript", "icon": "simple-icons:typescript" },
-        { "name": "React",      "icon": "simple-icons:react" },
-        { "name": "Bootstrap",  "icon": "simple-icons:bootstrap" }
+        { "name": "scikit-learn", "icon": "simple-icons:scikitlearn" },
+        { "name": "TensorFlow", "icon": "simple-icons:tensorflow" },
+        { "name": "PyTorch", "icon": "simple-icons:pytorch" },
+        { "name": "Keras", "icon": "simple-icons:keras" },
+        { "name": "Predictive Modelling", "icon": "mdi:chart-line" },
+        { "name": "Anomaly Detection", "icon": "mdi:pulse" }
       ]
     },
     {
-      "title": "Motion, 3D & Video",
+      "title": "Data & Databases",
       "skills": [
-        { "name": "Three.js",     "icon": "simple-icons:threedotjs" },
-        { "name": "After Effects","icon": "simple-icons:adobeaftereffects" },
-        { "name": "Premiere Pro", "icon": "simple-icons:adobepremierepro" },
-        { "name": "Photoshop",    "icon": "simple-icons:adobephotoshop" }
+        { "name": "SQL", "icon": "mdi:database" },
+        { "name": "MySQL", "icon": "simple-icons:mysql" },
+        { "name": "Data Integration", "icon": "mdi:database-sync" },
+        { "name": "Data Cleaning", "icon": "mdi:filter-outline" },
+        { "name": "Data Transformation", "icon": "mdi:swap-horizontal" }
       ]
     },
     {
-      "title": "Platforms & Publishing",
+      "title": "Research & Analytical Methods",
       "skills": [
-        { "name": "WordPress", "icon": "simple-icons:wordpress" },
-        { "name": "Drupal",    "icon": "simple-icons:drupal" },
-        { "name": "Hugo",      "icon": "simple-icons:hugo" },
-        { "name": "AWS",       "icon": "simple-icons:amazonaws" }
+        { "name": "Statistical Modelling", "icon": "mdi:chart-bell-curve" },
+        { "name": "Time-Series Analysis", "icon": "mdi:chart-timeline-variant" },
+        { "name": "Medical Image Analysis", "icon": "mdi:image-search-outline" },
+        { "name": "Computational Bioinformatics", "icon": "mdi:dna" },
+        { "name": "S-LDSC", "icon": "mdi:chart-scatter-plot" },
+        { "name": "Reproducible Workflows", "icon": "mdi:repeat" }
       ]
     },
     {
-      "title": "Dev & Workflow Tools",
+      "title": "Development & Workflow",
       "skills": [
-        { "name": "Git",      "icon": "simple-icons:git" },
-        { "name": "GitHub",   "icon": "simple-icons:github" },
-        { "name": "Bash",     "icon": "simple-icons:gnubash" },
-        { "name": "Markdown", "icon": "simple-icons:markdown" }
+        { "name": "Git", "icon": "simple-icons:git" },
+        { "name": "GitHub", "icon": "simple-icons:github" },
+        { "name": "Linux / Unix", "icon": "simple-icons:linux" },
+        { "name": "Docker", "icon": "simple-icons:docker" },
+        { "name": "Analytical Pipelines", "icon": "mdi:workflow" },
+        { "name": "Electronic Lab Notebooks", "icon": "mdi:notebook-outline" }
       ]
     },
     {
-      "title": "Data & Infrastructure",
+      "title": "Cloud & Applications — Developing Skills",
       "skills": [
-        { "name": "SQLite",     "icon": "simple-icons:sqlite" },
-        { "name": "Nginx",      "icon": "simple-icons:nginx" },
-        { "name": "Docker",     "icon": "simple-icons:docker" },
-        { "name": "Prometheus", "icon": "simple-icons:prometheus" }
+        { "name": "Microsoft Azure", "icon": "mdi:cloud-outline" },
+        { "name": "Power BI", "icon": "mdi:chart-bar" },
+        { "name": "Streamlit", "icon": "simple-icons:streamlit" }
       ]
     }
   ]
