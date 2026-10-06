@@ -2,23 +2,45 @@
 import projectsFile from '../data/projects.json';
 import { augmentProjectsWithImages, type ProjectEntry } from '../lib/fetchGitHub';
 import { withBase } from '../lib/assetPath';
+import { icons } from '../lib/icons';
 
 interface Props {
   featuredOnly?: boolean;
 }
+
 const { featuredOnly = false } = Astro.props;
 
-const allProjectsData = await augmentProjectsWithImages(projectsFile.items as ProjectEntry[]);
-const displayProjects = featuredOnly
-  ? allProjectsData.filter((p) => p.sliderImage)
-  : allProjectsData;
+const categoryFilters = [
+  {
+    label: 'Computational Biology & Neuroscience',
+    value: 'computational-biology',
+  },
+  {
+    label: 'IoT & Industry 4.0',
+    value: 'industry-4',
+  },
+  {
+    label: 'Data Science',
+    value: 'data-science',
+  },
+  {
+    label: 'Robotics',
+    value: 'robotics',
+  },
+];
 
-import { icons } from '../lib/icons';
-
-const categoryFilters = [...new Set(allProjectsData.map((p) => p.category))].map((cat) => ({
-  label: cat.replace(/\b\w/g, (c) => c.toUpperCase()),
-  value: cat,
+const allProjectsData = (
+  await augmentProjectsWithImages(projectsFile.items as ProjectEntry[])
+).map((project) => ({
+  ...project,
+  categoryLabel:
+    categoryFilters.find((category) => category.value === project.category)?.label
+    ?? project.category,
 }));
+
+const displayProjects = featuredOnly
+  ? allProjectsData.filter((project) => (project as any).featured)
+  : allProjectsData;
 
 const filters = [
   { label: 'Featured', value: 'featured' },
@@ -27,12 +49,16 @@ const filters = [
 ];
 
 const projectsJson = JSON.stringify(
-  allProjectsData.map((p) => ({
-    ...p,
-    sliderImage:   p.sliderImage   ? withBase(p.sliderImage)   : p.sliderImage,
-    backgroundImage: p.backgroundImage ? withBase(p.backgroundImage) : p.backgroundImage,
+  displayProjects.map((project) => ({
+    ...project,
+    sliderImage: project.sliderImage
+      ? withBase(project.sliderImage)
+      : project.sliderImage,
+    backgroundImage: project.backgroundImage
+      ? withBase(project.backgroundImage)
+      : project.backgroundImage,
   }))
-);
+).replace(/</g, '\\u003c');
 ---
 
 <section id="projects" class="py-24 bg-slate-900/30" style="scroll-margin-top: 80px;">
