@@ -153,7 +153,7 @@ const projectsJson = JSON.stringify(
 
               <div class="project-footer relative z-10">
                 <div class="footer-shimmer" aria-hidden="true" />
-                <span class="category-badge">{project.category}</span>
+                <span class="category-badge">{project.categoryLabel}</span>
                 {project.icon && icons[project.icon] && (
                   <div class="card-icon shrink-0">
                     <svg
@@ -346,11 +346,11 @@ const projectsJson = JSON.stringify(
       modalHero.style.backgroundImage = `url('${img}')`;
       modalHero.style.display = '';
     } else {
-      modalHero.style.backgroundImage = '';
-      modalHero.style.display = 'none';
+  modalHero.style.backgroundImage = '';
+  modalHero.style.display = '';
     }
 
-    modalCat.textContent = p.category;
+    modalCat.textContent = p.categoryLabel || p.category;
     modalTitle.textContent = p.title;
     modalCo.textContent = p.company;
     modalDesc.textContent = p.description;
